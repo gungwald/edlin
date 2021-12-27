@@ -1,3 +1,7 @@
+# Eclipse build directories
+Debug/
+Release/
+
 # Prerequisites
 *.d
 
