@@ -22,5 +22,10 @@ int main(int argc, const char *argv[])
 }
 
 void openFile(const char *name) {
-
+	FILE *f;
+	if ((f = fopen(name, "r")) != NULL) {
+		/* read everything into buffer */
+	} else {
+		perror(name);
+	}
 }
