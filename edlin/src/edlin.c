@@ -10,8 +10,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "EditBuffer.h"
 
-void openFile(const char *name);
 
 int main(int argc, const char *argv[])
 {
@@ -21,11 +21,3 @@ int main(int argc, const char *argv[])
 	return EXIT_SUCCESS;
 }
 
-void openFile(const char *name) {
-	FILE *f;
-	if ((f = fopen(name, "r")) != NULL) {
-		/* read everything into buffer */
-	} else {
-		perror(name);
-	}
-}

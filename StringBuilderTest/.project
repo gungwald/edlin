@@ -28,7 +28,7 @@
 		<link>
 			<name>edlin-src</name>
 			<type>2</type>
-			<locationURI>WORKSPACE_LOC/edlin/src</locationURI>
+			<location>/home/bill/git/edlin/edlin/src</location>
 		</link>
 	</linkedResources>
 </projectDescription>

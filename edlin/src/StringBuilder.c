@@ -53,6 +53,7 @@ void sbAppend(StringBuilder *s, const StringBuilder *suffix)
 	combinedLength = MIN(combinedLength, sizeof(s->data) - 1);
 	strncat(s->data, suffix->data, combinedLength);
 	s->data[combinedLength] = STRING_TERMINATOR;
+	s->length = combinedLength;
 }
 
 void sbAppendCharArray(StringBuilder *s, const char suffix[])
@@ -63,6 +64,7 @@ void sbAppendCharArray(StringBuilder *s, const char suffix[])
 	combinedLength = MIN(combinedLength, sizeof(s->data) - 1);
 	strncat(s->data, suffix, combinedLength);
 	s->data[combinedLength] = STRING_TERMINATOR;
+	s->length = combinedLength;
 }
 
 char sbCharAt(const StringBuilder *s, size_t index)
@@ -110,7 +112,7 @@ StringBuilder *sbDelete(StringBuilder *s, size_t start, size_t end)
 	   be silently ignored, and the result will be wrong. */
 	if (start >= s->length) {
 		fprintf(stderr, "Start index %lu out of bounds for string '%s'\n", start, s->data);
-	} else if (end >= s->length) {
+	} else if (end > s->length) { /* end is 1 past the last to delete */
 		fprintf(stderr, "End index %lu out of bounds for string '%s'\n", end, s->data);
 	} else {
 		/* Create more efficient variables */
