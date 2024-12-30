@@ -1,0 +1,7 @@
+{
+    "ca65.cc65": "C:\\\\opt\\\\cc65-snapshot-win32\\\\bin",
+    "ca65.vscodeenv": "windows", // May be windows, linux, or mac
+    "ca65.testenv": "windows",  // May be windows, linux, or mac
+    "ca65.buildenv": "windows", // May be windows, linux or mac
+    "ca65.make.build": "make"
+}

@@ -1,0 +1,2 @@
+10 print chr$(4);"-RND"
+

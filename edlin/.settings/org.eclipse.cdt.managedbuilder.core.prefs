@@ -1,0 +1,12 @@
+eclipse.preferences.version=1
+environment/buildEnvironmentInclude/cdt.managedbuild.config.gnu.exe.debug.744896280/CPATH/delimiter=;
+environment/buildEnvironmentInclude/cdt.managedbuild.config.gnu.exe.debug.744896280/CPATH/operation=remove
+environment/buildEnvironmentInclude/cdt.managedbuild.config.gnu.exe.debug.744896280/C_INCLUDE_PATH/delimiter=;
+environment/buildEnvironmentInclude/cdt.managedbuild.config.gnu.exe.debug.744896280/C_INCLUDE_PATH/operation=replace
+environment/buildEnvironmentInclude/cdt.managedbuild.config.gnu.exe.debug.744896280/C_INCLUDE_PATH/value=C\:\\Users\\bill_\\scoop\\apps\\gcc\\current\\include
+environment/buildEnvironmentInclude/cdt.managedbuild.config.gnu.exe.debug.744896280/append=true
+environment/buildEnvironmentInclude/cdt.managedbuild.config.gnu.exe.debug.744896280/appendContributed=true
+environment/buildEnvironmentLibrary/cdt.managedbuild.config.gnu.exe.debug.744896280/LIBRARY_PATH/delimiter=;
+environment/buildEnvironmentLibrary/cdt.managedbuild.config.gnu.exe.debug.744896280/LIBRARY_PATH/operation=remove
+environment/buildEnvironmentLibrary/cdt.managedbuild.config.gnu.exe.debug.744896280/append=true
+environment/buildEnvironmentLibrary/cdt.managedbuild.config.gnu.exe.debug.744896280/appendContributed=true
