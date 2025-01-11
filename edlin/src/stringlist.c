@@ -1,12 +1,10 @@
 #include <stdio.h>  /* fflush */
 #include <stdlib.h> /* EXIT_FAILURE */
-#include <wchar.h>	/* wcsdup */
-#include "heap.h"
-#include "strlist.h"
+#include "stringlist.h"
 
 List* initList() {
     struct ListCtrlNode* n;
-    n = allocateListCtrlNode();
+    n = (struct ListCtrlNode *) malloc(sizeof(struct ListCtrlNode));
     n->first = NULL;
     n->cursor = NULL;
     n->last = NULL;
@@ -18,8 +16,8 @@ bool isListEmpty(const List* l) {
     return l->size == 0;
 }
 
-wchar_t* removeListItem(List* l) {
-    wchar_t* value = NULL;
+char* removeListItem(List* l) {
+    char* value = NULL;
     struct ListNode* n;
 
     if (l->size > 0) {
@@ -36,16 +34,16 @@ wchar_t* removeListItem(List* l) {
         l->cursor = n->next;        /* Advance cursor */
         l->size--;                  /* List does not contain n */
         value = n->data;
-        freeListNode(n);
+        free(n);
     }
     return value;
 }
 
 /* Make sure the data is dynamically allocated and no other code has access to it. */
-List* appendListItem(List* l, wchar_t* data) {
+List* appendListItem(List* l, char* data) {
     struct ListNode* toPutAtEnd;
 
-    toPutAtEnd = allocateListNode();
+    toPutAtEnd = (struct ListNode *) malloc(sizeof(struct ListNode));
     toPutAtEnd->data = data;
     toPutAtEnd->next = NULL;
 
@@ -62,7 +60,7 @@ List* appendListItem(List* l, wchar_t* data) {
     return l;
 }
 
-const wchar_t* getListItem(const List* l) {
+const char* getListItem(const List* l) {
     return l->cursor->data;
 }
 
@@ -72,7 +70,7 @@ List* advanceList(List* l) {
     return l;
 }
 
-bool isListAtEnd(List* l) {
+bool isListAtEnd(const List* l) {
     return l->cursor == NULL;
 }
 
@@ -85,14 +83,14 @@ List* resetList(List* l) {
     return l;
 }
 
-/* l better be a list of wchar_t * or this will crash. */
+/* l better be a list of char * or this will crash. */
 void printStringList(List* l)
 {
     struct ListNode* origCursor;
     origCursor = l->cursor;
     resetList(l);
     while (!isListAtEnd(l)) {
-        wprintf(L"%ls\n", getListItem(l));
+        printf("%s\n", getListItem(l));
         advanceList(l);
     }
     fflush(stdout);

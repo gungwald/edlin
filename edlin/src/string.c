@@ -1,68 +1,67 @@
-#include <strsafe.h>    /* StringCchLength */
+#include <stdlib.h>	/* malloc */
+#include <ctype.h>	/* tolower */
 #include "string.h"
 #include "error.h"
-#include "heap.h"
 
-/* Turn off security warnings about string functions. The correct amount of space is always allocated. */
-#pragma warning(disable : 4996)
+#define STRING_TERMINATOR '\0'
 
-bool isGlob(const wchar_t *s)
+bool isGlob(const char *s)
 {
-    return wcschr(s, L'*') != NULL || wcschr(s, L'?') != NULL;
+    return strchr(s, '*') != NULL || strchr(s, '?') != NULL;
 }
 
-wchar_t *concat(const wchar_t *left, const wchar_t *right)
+char *concat(const char *left, const char *right)
 {
     size_t requiredSize;
-    wchar_t *result;
+    char *result;
 
-    requiredSize = wcslen(left) + wcslen(right) + 1;
-    result = allocateString(requiredSize);
-    wcscpy(result, left);
-    wcscat(result, right);
+    requiredSize = strlen(left) + strlen(right) + 1;
+    result = (char *) malloc(requiredSize * sizeof(char));
+    strcpy(result, left);
+    strcat(result, right);
     return result;
 }
 
-wchar_t *concat3(const wchar_t *first,
-                 const wchar_t *second,
-                 const wchar_t *third)
+char *concat3(const char *first,
+                 const char *second,
+                 const char *third)
 {
     size_t requiredSize;
-    wchar_t *result;
+    char *result;
 
-    requiredSize = wcslen(first) + wcslen(second) + wcslen(third) + 1;
-    result = allocateString(requiredSize);
-    wcscpy(result, first);
-    wcscat(result, second);
-    wcscat(result, third);
+    requiredSize = strlen(first) + strlen(second) + strlen(third) + 1;
+    result = (char *) malloc(requiredSize * sizeof(char));
+    strcpy(result, first);
+    strcat(result, second);
+    strcat(result, third);
     return result;
 }
 
-wchar_t *concat4(const wchar_t *first,
-                 const wchar_t *second,
-                 const wchar_t *third,
-                 const wchar_t *fourth)
+char *concat4(const char *first,
+                 const char *second,
+                 const char *third,
+                 const char *fourth)
 {
     size_t requiredSize;
-    wchar_t *result;
+    char *result;
 
-    requiredSize = wcslen(first) + wcslen(second) + wcslen(third) + wcslen(fourth)+ 1;
-    result = allocateString(requiredSize);
-    wcscpy(result, first);
-    wcscat(result, second);
-    wcscat(result, third);
-    wcscat(result, fourth);
+    requiredSize = strlen(first) + strlen(second) + strlen(third) + strlen(fourth)+ 1;
+    result = (char *) malloc(requiredSize * sizeof(char));
+    strcpy(result, first);
+    strcat(result, second);
+    strcat(result, third);
+    strcat(result, fourth);
     return result;
 }
 
 /**
  * s is modified.
  */
-wchar_t *replaceAll(wchar_t *s, wchar_t searchFor, wchar_t replaceWith)
+char *replaceAll(char *s, char searchFor, char replaceWith)
 {
-    wchar_t *p;
+    char *p;
 
-    for (p = s; *p != L'\0'; p++) {
+    for (p = s; *p != STRING_TERMINATOR; p++) {
         if (*p == searchFor) {
             *p = replaceWith;
         }
@@ -70,83 +69,49 @@ wchar_t *replaceAll(wchar_t *s, wchar_t searchFor, wchar_t replaceWith)
     return s;
 }
 
-char *convertToUtf8(const wchar_t *wstr)
-{
-    size_t requiredSize; /* in bytes */
-    char *utf8;
-
-    /* Will include string terminator because of -1 argument. */
-    requiredSize = WideCharToMultiByte(CP_UTF8, 0, wstr, -1, NULL, 0, NULL, NULL);
-    utf8 = allocateUTF8String(requiredSize);
-    /* Includes string terminator because of -1 argument. */
-    WideCharToMultiByte(CP_UTF8,0,wstr,-1,utf8,requiredSize,NULL,NULL);
-    return utf8;
+bool startsWith(const char *s, const char *prefix) {
+	if (s != NULL && prefix != NULL)
+		return strncmp(s, prefix, strlen(prefix)) == 0;
+	return false;
 }
 
-char **convertAllToUtf8(int argc, const TCHAR *argv[])
-{
-    char **utf8StringArray;
-    int i;
+bool endsWith(const char *s, const char *suffix) {
+    size_t suffixLength, sLength;
 
-    utf8StringArray = allocateUTF8PointerArray(argc);
-    for (i = 0; i < argc; i++) {
-        utf8StringArray[i] = convertToUtf8(argv[i]);
+    if (s != NULL && suffix != NULL) {
+	    sLength = strlen(s);
+	    suffixLength = strlen(suffix);
+	    if (sLength < suffixLength)
+		return strcmp(s + sLength - suffixLength, suffix) == 0;
     }
-    return utf8StringArray;
+    return false;
 }
 
-bool startsWith(const wchar_t *s, const wchar_t *prefix) {
-    return wcsncmp(s, prefix, wcslen(prefix)) == 0;
+bool endsWithChar(const char *s, char c) {
+	size_t sLength;
+
+	if (s != NULL) {
+		/* Determine the length of s only once because strlen is O(n) */
+		sLength = strlen(s);
+		/* If sLength is 0, s[sLength-1] would be before the beginning of the array s */
+		if (sLength > 0)
+			return s[sLength-1] == c;
+	}
+	return false;
 }
 
-bool endsWith(const wchar_t *s, const wchar_t *suffix) {
-    size_t compareCount, sLength;
-    bool endsWith;
-
-    sLength = wcslen(s);
-    compareCount = wcslen(suffix);
-    if (compareCount > sLength) {
-        endsWith = false;
-    } else {
-        endsWith = wcscmp(s + sLength - compareCount, suffix) == 0;
-    }
-    return endsWith;
+bool stringContains(const char *container, const char *value) {
+    return strstr(container, value) != NULL;
 }
 
-bool endsWithChar(const wchar_t *s, wchar_t c) {
-    return s[wcslen(s)-1] == c;
-}
+char *toLowerCase(const char *s) {
+    char *lower;
+    char *p;
 
-bool stringContains(const wchar_t *container, const wchar_t *value) {
-    return wcsstr(container, value) != NULL;
-}
-
-wchar_t *toLowerCase(const wchar_t *s) {
-    wchar_t *lower;
-    wchar_t *p;
-
-    lower = createStringCopy(s);
+    lower = strdup(s);
     for (p = lower; *p; p++) {
         *p = tolower(*p);
     }
     return lower;
 }
 
-wchar_t *createStringCopy(const wchar_t *s) {
-    size_t size;
-    wchar_t *copy;
-
-    size = findStringLength(s) + 1;
-    copy = allocateString(size);
-    wcscpy(copy, s);
-    return copy;
-}
-
-size_t findStringLength(const wchar_t* s)
-{
-    size_t length;
-    if (FAILED(StringCchLength(s, STRSAFE_MAX_CCH, &length))) {
-        fail(L"Failed to find length of string");
-    }
-    return length;
-}

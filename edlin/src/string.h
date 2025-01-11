@@ -3,21 +3,16 @@
 
 #include <stdbool.h>
 #include <string.h>
-#include <wchar.h>
 
-extern wchar_t *concat(const wchar_t *s, const wchar_t *t);
-extern wchar_t *concat3(const wchar_t *s, const wchar_t *t,const wchar_t *u);
-extern wchar_t *concat4(const wchar_t *s, const wchar_t *t, const wchar_t *u, const wchar_t *v);
-extern wchar_t *replaceAll(wchar_t *in, wchar_t from, wchar_t to);
-extern char *convertToUtf8(const wchar_t *s);
-extern char **convertAllToUtf8(int count, const wchar_t *strs[]);
-extern bool startsWith(const wchar_t *s, const wchar_t *prefix);
-extern bool endsWith(const wchar_t *s, const wchar_t *suffix);
-extern bool endsWithChar(const wchar_t *s, wchar_t c);
-extern bool stringContains(const wchar_t *container, const wchar_t *value);
-extern wchar_t *createStringCopy(const wchar_t *s);
-extern wchar_t *toLowerCase(const wchar_t *s);
-extern size_t findStringLength(const wchar_t* s);
+extern char *concat(const char *s, const char *t);
+extern char *concat3(const char *s, const char *t,const char *u);
+extern char *concat4(const char *s, const char *t, const char *u, const char *v);
+extern char *replaceAll(char *in, char from, char to);
+extern bool startsWith(const char *s, const char *prefix);
+extern bool endsWith(const char *s, const char *suffix);
+extern bool endsWithChar(const char *s, char c);
+extern bool stringContains(const char *container, const char *value);
+extern char *toLowerCase(const char *s);
 
 #endif
 

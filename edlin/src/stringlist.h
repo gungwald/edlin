@@ -8,7 +8,7 @@ struct ListNode
 {
     struct ListNode* prev;
     struct ListNode* next;
-    wchar_t* data;
+    char* data;
 };
 
 /* It is necessary to keep track of the following fields, like "last", for efficency. The "last" field allows the append
@@ -27,13 +27,15 @@ struct ListCtrlNode /* as */
     List;
 
 extern List* initList();
-extern void appendListItem(const List* l, wchar_t* data);
-extern List* advanceList(const List* l);
-extern const wchar_t* getListItem(const List* l);
+extern List* appendListItem(List* l, char* data);
+extern List* advanceList(List* l);
+extern const char* getListItem(const List* l);
 extern size_t getListSize(const List* l);
 extern bool isListEmpty(const List* l);
-extern wchar_t* removeListItem(const List* l);
-extern void printList(const List* l);
+extern bool isListAtEnd(const List* l);
+extern char* removeListItem(List* l);
+extern void printList(List* l);
+extern List *resetList(List *);
 
 #endif
 

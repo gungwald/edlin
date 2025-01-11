@@ -8,6 +8,6 @@
 #ifndef EDLIN_H_
 #define EDLIN_H_
 
-
+extern const char *programName;
 
 #endif /* EDLIN_H_ */
