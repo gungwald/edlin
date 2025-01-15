@@ -57,20 +57,6 @@ void performCommand(const char *command)
 	}
 }
 
-static void chomp(char *line)
-{
-	size_t i;
-	char c;
-	/* It makes sense to cycle through the whole line because if
-	   strlen was used instead, it would do the same to determine
-	   the length. */
-	for (i=0; i<MAX_LINE_SIZE && (c=line[i])!='\0'; ++i) {
-		if (c=='\r' || c=='\n') {
-			line[i]='\0';
-		}
-	}
-}
-
 static void list()
 {
 	resetList(buffer);

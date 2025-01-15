@@ -3,5 +3,9 @@
     "ca65.vscodeenv": "windows", // May be windows, linux, or mac
     "ca65.testenv": "windows",  // May be windows, linux, or mac
     "ca65.buildenv": "windows", // May be windows, linux or mac
-    "makefile.makefilePath": "C:\\Users\\bill_\\git\\edlin\\Makefile"
+    "makefile.makefilePath": "/home/bill/git/edlin/Makefile",
+    "makefile.buildLog": "Makefile.build.log",
+    "files.associations": {
+        "string.h": "c"
+    }
 }

@@ -13,24 +13,38 @@
 #include "string.h"
 #include "editbuffer.h"
 
-#define MAX_COMMAND_SIZE 256
+#define STRING_SIZE 256
+
+static void editFile(const char *fileName);
 
 const char *programName;
-char command[MAX_COMMAND_SIZE];
+char fileName[STRING_SIZE]={'\0'};
+char command[STRING_SIZE]={'\0'};
 
-int main(int argc, const char *argv[])
+void main(int argc, const char *argv[])
 {
-	programName = argv[0];
+	int i;
+	programName=argv[0];
 
-	printf("FILE:");
-	fgets(command, sizeof(command), stdin);
-	openFile(command);
-	while (strcmp(command,"q") != 0) {
-		printf(":");
-		fgets(command, sizeof(command), stdin);
-		performCommand(command);
+	if (argc>1)
+		for (i=1; i<argc; ++i)
+			editFile(argv[i]);
+	else {
+		printf("FILE:");
+		fgets(fileName,sizeof(fileName),stdin);
+		chomp(fileName);
+		if (strlen(fileName)>0)
+			editFile(fileName);
 	}
-
-	return EXIT_SUCCESS;
 }
 
+
+void editFile(const char *fileName) 
+{
+	openFile(fileName);
+	while (strcmp(command,"q")!=0) {
+		printf(":");
+		fgets(command,sizeof(command),stdin);
+		performCommand(command);
+	}
+}

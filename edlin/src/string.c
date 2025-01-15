@@ -115,3 +115,17 @@ char *toLowerCase(const char *s) {
     return lower;
 }
 
+/* line must be an actual array, not a char pointer, because the sizeof(line) function isused. */
+void chomp(char line[])
+{
+	size_t i;
+	char c;
+	/* It makes sense to cycle through the whole line because if
+	   strlen was used instead, it would do the same to determine
+	   the length. */
+	for (i=0; i<sizeof(line) && (c=line[i])!='\0'; ++i) {
+		if (c=='\r' || c=='\n') {
+			line[i]='\0';
+		}
+	}
+}
